@@ -1,4 +1,4 @@
-# Explorer Lab
+# RocketPay
 
 ![preview](./.github/project.png)
 
