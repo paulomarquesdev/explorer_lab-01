@@ -1,10 +1,10 @@
-# Explorer Lab
+# RocketPay
 
 ![preview](./.github/project.png)
 
 > Explorer Lab #01
 
-Projeto construído do evento Explorer Lab #01 promovido pela Rocketseat.
+Projeto construído no evento Explorer Lab #01 promovido pela Rocketseat.
 
 
 [Clique aqui para acessar](https://paulomarquesdev.github.io/nlw-esports-trilhaexplorer/)
