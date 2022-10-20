@@ -17,44 +17,6 @@ function setCardType(type) {
 }
 globalThis.setCardType = setCardType
 
-const securityCode = document.querySelector("#security-code")
-const securityCodePattern = {
-    mask: "0000",
-}
-const secutityCodeMasked = IMask(securityCode, securityCodePattern)
-
-
-const dateCardDefault = document.querySelector("#app > section > div.cc-info > div.cc-extra > div.cc-expiration > div.value")
-function setMonthCardDefault () {
-    const month = new Date().getMonth()
-    const year = String(new Date().getFullYear()).slice(2)
-
-    if (String(month).length<2){
-        return `0${String(month)}/${year}`
-    } else {
-        return `${month}/${year}`
-    }
-}
-dateCardDefault.textContent = setMonthCardDefault()
-
-
-const expirationDate = document.querySelector("#expiration-date")
-const expirationDatePattern = {
-    mask: "MM{/}YY",
-    blocks: {
-        MM:{
-            mask: IMask.MaskedRange,
-            from: 1,
-            to: 12
-        },
-        YY: {
-            mask: IMask.MaskedRange,
-            from: String(new Date().getFullYear()).slice(2),
-            to: String(new Date().getFullYear()+10).slice(2)
-        }
-    }
-}
-const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
 
 
 const cardNumber = document.querySelector("#card-number")
@@ -85,3 +47,100 @@ const cardNumberPattern = {
     },
 }
 const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
+
+
+
+const expirationDate = document.querySelector("#expiration-date")
+const expirationDatePattern = {
+    mask: "MM{/}YY",
+    blocks: {
+        MM:{
+            mask: IMask.MaskedRange,
+            from: 1,
+            to: 12
+        },
+        YY: {
+            mask: IMask.MaskedRange,
+            from: String(new Date().getFullYear()).slice(2),
+            to: String(new Date().getFullYear()+10).slice(2)
+        }
+    }
+}
+const expirationDateMasked = IMask(expirationDate, expirationDatePattern)
+
+
+
+const securityCode = document.querySelector("#security-code")
+const securityCodePattern = {
+    mask: "0000",
+}
+const securityCodeMasked = IMask(securityCode, securityCodePattern)
+
+
+
+const addButton = document.querySelector("#add-card")
+addButton.addEventListener("click", () => {
+    alert("Cartão adicionado com sucesso!")
+})
+
+document.querySelector("form").addEventListener("submit", (event) => {
+    event.preventDefault()
+})
+
+
+
+cardNumberMasked.on("accept", () => {
+    const cardType = cardNumberMasked.masked.currentMask.cardtype
+    setCardType(cardType)
+    updateNumber(cardNumberMasked.value)
+})
+
+function updateNumber(number) {
+    const ccNumber = document.querySelector("#app > section > div.cc-info > div.cc-number")
+    ccNumber.innerText = number.length === 0 ? "1234 5678 9012 3456" : number
+}
+
+
+
+const cardHolder = document.querySelector("#card-holder")
+cardHolder.addEventListener("input", () => {
+    const ccHolder = document.querySelector("#app > section > div.cc-info > div.cc-holder > div.value")
+    ccHolder.innerText = cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
+})
+
+
+
+expirationDateMasked.on("accept", () => {
+    updateExpirationDate(expirationDateMasked.value)
+})
+
+function setMonthCardDefault () {
+    const month = new Date().getMonth()
+    const year = String(new Date().getFullYear()).slice(2)
+
+    if (String(month).length<2){
+        return `0${String(month)}/${year}`
+    } else {
+        return `${month}/${year}`
+    }
+}
+
+function updateExpirationDate(expirationDate) {    
+    const ccExpirationDate = document.querySelector("#app > section > div.cc-info > div.cc-extra > div.cc-expiration > div.value")
+
+    ccExpirationDate.innerText = expirationDate.length === 0 ? setMonthCardDefault() : expirationDate
+}
+
+
+
+securityCodeMasked.on("accept", () => {
+    updateSecurityCode(securityCodeMasked.value);
+})
+
+function updateSecurityCode(code) {
+    const ccSecurity = document.querySelector("#app > section > div.cc-info > div.cc-extra > div.cc-security > div.value")
+
+    ccSecurity.innerText = code.length === 0 ? "123" : code
+}
+
+
