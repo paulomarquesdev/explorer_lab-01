@@ -5,7 +5,7 @@ const ccBgColor01 = document.querySelector("#app > section > div.cc-bg > svg > g
 const ccBgColor02 = document.querySelector("#app > section > div.cc-bg > svg > g > g:nth-child(2) > path")
 const ccLogo = document.querySelector("#app > section > div.cc-logo > span:nth-child(2) > img")
 
-export function setCardType(type) {
+function setCardType(type) {
     const colors = {
         "visa": ["#436D99", "#2D57F2"],
         "mastercard": ["#DF6F29", "#C69347"],
@@ -15,7 +15,6 @@ export function setCardType(type) {
     ccBgColor02.setAttribute('fill', colors[type][1])
     ccLogo.setAttribute('src', `cc-${type}.svg`)
 }
-
 globalThis.setCardType = setCardType
 
 const securityCode = document.querySelector("#security-code")
@@ -23,6 +22,20 @@ const securityCodePattern = {
     mask: "0000",
 }
 const secutityCodeMasked = IMask(securityCode, securityCodePattern)
+
+
+const dateCardDefault = document.querySelector("#app > section > div.cc-info > div.cc-extra > div.cc-expiration > div.value")
+function setMonthCardDefault () {
+    const month = new Date().getMonth()
+    const year = String(new Date().getFullYear()).slice(2)
+
+    if (String(month).length<2){
+        return `0${String(month)}/${year}`
+    } else {
+        return `${month}/${year}`
+    }
+}
+dateCardDefault.textContent = setMonthCardDefault()
 
 
 const expirationDate = document.querySelector("#expiration-date")
