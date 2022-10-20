@@ -1,6 +1,6 @@
 # RocketPay
 
-![preview](./.github/project.png)
+![preview](./.github/rocketpay.png)
 
 > Explorer Lab #01
 
